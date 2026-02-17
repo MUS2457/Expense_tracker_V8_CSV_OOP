@@ -1,7 +1,7 @@
 
 class Expense:
-    def __init__(self, name, category , price):
-        self.name = name
+    def __init__(self, product, category , price):
+        self.product = product
         self.category = category
         self.price = price
 
