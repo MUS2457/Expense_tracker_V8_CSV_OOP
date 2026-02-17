@@ -40,7 +40,7 @@ def most_least_price (expenses) :
     return None, None,None,None,None,None
 
 
-def product_higher_than_average_price(expenses):
+def product_higher_than_average(expenses):
 
     total, average = Expense.total_expenses(expenses)
     bigger_average = {}
@@ -53,15 +53,15 @@ def product_higher_than_average_price(expenses):
             bigger_average[expense.product] = expense.price
     return bigger_average
 
-def product_higher_than_average_price_v2(expenses):
+def category_higher_than_average(expenses):
 
     total, average = Expense.total_expenses(expenses)
     category, average_per_category = Expense.total_expenses_category(expenses)
 
     bigger_average = {}
 
-    if average is None :  # i just want to reuse fc , the fc before this solve same problem but just curiosity
-        return None        # because the class method has been change to calculate average per cat instead of total
+    if average is None :
+        return None
 
     for category ,averages in average_per_category.items() :
         if averages > average :
