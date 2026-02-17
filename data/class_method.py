@@ -27,14 +27,28 @@ class Expense:
 
     @classmethod
     def total_expenses_category(cls, expenses):
+
         category = {}
+
         if not expenses:
-            return {}
+            return {}, {}
+
+        # Phase 1: Accumulate totals and counts
         for exp in expenses:
             if exp.category not in category:
-                category[exp.category] = exp.price
+                category[exp.category] = {
+                    "total": exp.price,
+                    "count": 1
+                }
             else:
-                category[exp.category] += exp.price
+                category[exp.category]["total"] += exp.price
+                category[exp.category]["count"] += 1
 
-        return category
+        # Phase 2: Compute averages
+        average_per_category = {}
 
+        for cat, info in category.items():
+            average = round(info["total"] / info["count"], 1)
+            average_per_category[cat] = average
+
+        return category, average_per_category
