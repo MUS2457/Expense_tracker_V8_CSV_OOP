@@ -1,9 +1,11 @@
+from datetime import datetime
 
 class Expense:
     def __init__(self, product, category , price):
         self.product = product
         self.category = category
         self.price = price
+        self.timestamp = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
 
     @classmethod
     def total_expenses(cls, expenses):
@@ -33,7 +35,6 @@ class Expense:
         if not expenses:
             return {}, {}
 
-        # Phase 1: Accumulate totals and counts
         for exp in expenses:
             if exp.category not in category:
                 category[exp.category] = {
@@ -41,10 +42,9 @@ class Expense:
                     "count": 1
                 }
             else:
-                category[exp.category]["total"] += exp.price
+                category[exp.category]["total"] += exp.price   #using nested data access to add value safely
                 category[exp.category]["count"] += 1
 
-        # Phase 2: Compute averages
         average_per_category = {}
 
         for cat, info in category.items():
@@ -52,3 +52,11 @@ class Expense:
             average_per_category[cat] = average
 
         return category, average_per_category
+
+
+    def to_dictionary(self):
+        return {"timestamp" : self.timestamp, "product": self.product, "category": self.category, "price": self.price}
+
+    @classmethod
+    def from_dictionary(cls, dictionary):
+        return cls(dictionary["product"], dictionary["category"], dictionary["price"])
