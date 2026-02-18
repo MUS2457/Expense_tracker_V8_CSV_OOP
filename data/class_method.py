@@ -59,4 +59,7 @@ class Expense:
 
     @classmethod
     def from_dictionary(cls, dictionary):
-        return cls(dictionary["product"], dictionary["category"], dictionary["price"])
+        expenses = {}
+        class_exp = cls(dictionary["product"], dictionary["category"],dictionary["price"])
+        expenses[dictionary["timestamp"]] = class_exp
+        return expenses
