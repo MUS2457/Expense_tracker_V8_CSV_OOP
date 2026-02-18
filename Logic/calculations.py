@@ -1,4 +1,3 @@
-from data import class_method, input_data
 from data.class_method import Expense
 
 
@@ -69,3 +68,12 @@ def category_higher_than_average(expenses):
 
     return bigger_average
 
+def max_min_spent_category (expenses):
+    category, average = Expense.total_expenses_category(expenses)
+    if category :
+        highest = max(category, key= lambda x : category[x]["total"])
+        lowest = min(category, key= lambda x : category[x]["total"])
+
+        return highest, lowest, category[highest], category[lowest]
+
+    return None, None, None, None
