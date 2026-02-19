@@ -5,13 +5,12 @@ list_of_expenses = load_csv()
 def search_expence():
     while True:
         searched_date = input(
-            "Please enter the date you would like to search for in the format (DD-MM-YYYY), "
+            "Please enter the date you would like to search for in the format (MM/DD/YYYY), "
             "or type 'exit' to quit : "
         ).strip()
 
         if searched_date == 'exit':
-            print("Exiting...")
-            break
+            return "exit"
 
         if not searched_date:
             print("Please enter a valid date.")
@@ -19,8 +18,8 @@ def search_expence():
 
         total_that_day = 0
         category = {}
-        expenses_info = {}
         found = False
+        info = {}
 
         if list_of_expenses:
             for expence in list_of_expenses:
@@ -28,9 +27,7 @@ def search_expence():
                     if timestamp.startswith(searched_date):
                         found = True
                         total_that_day += obj.price
-
-                        expenses_info[timestamp] = {"product": obj.product, "category": obj.category, "price": obj.price}
-
+                        info[timestamp] = obj
                         if obj.category in category:
                             category[obj.category] += obj.price
                         else:
@@ -38,13 +35,13 @@ def search_expence():
 
             if found:
                 return {
-                    "expenses" : expenses_info,
-                    "total spent": total_that_day,
-                    "total spent per category": category
+                    "expenses": info,
+                    "total": total_that_day,
+                    "categories": category
                 }
             else:
                 print("No expenses found on that date.")
                 return False
         else:
             print("No expenses available.")
-            return found
+            return "no_expenses"

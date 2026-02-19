@@ -1,17 +1,5 @@
 from data.class_method import Expense
 
-
-def most_least_category_price (expenses) :
-    categories = Expense.total_expenses_category(expenses)
-    if categories :
-        most_category = max(categories, key=categories.get)
-        least_category = min(categories, key=categories.get)
-        return (most_category, least_category,
-                categories[most_category], categories[least_category]
-                )
-    else :
-        return None, None,None,None
-
 def most_least_price (expenses) :
     higher_product_price = float('-inf')
     higher_product_category = ''
@@ -74,6 +62,7 @@ def max_min_spent_category (expenses):
         highest = max(category, key= lambda x : category[x]["total"])
         lowest = min(category, key= lambda x : category[x]["total"])
 
-        return highest, lowest, category[highest], category[lowest]
+        return (highest, lowest, category[highest]["total"],category[highest]["count"],
+                category[lowest]["total"],category[lowest]["count"])
 
     return None, None, None, None

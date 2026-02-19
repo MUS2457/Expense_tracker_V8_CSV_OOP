@@ -60,6 +60,9 @@ class Expense:
     @classmethod
     def from_dictionary(cls, dictionary):
         expenses = {}
-        class_exp = cls(dictionary["product"], dictionary["category"],dictionary["price"])
+
+        price = float(dictionary["price"])  # remember always csv return a str so i should convert it to numeric data
+        class_exp = cls(dictionary["product"], dictionary["category"], price) #for future self
+
         expenses[dictionary["timestamp"]] = class_exp
         return expenses
